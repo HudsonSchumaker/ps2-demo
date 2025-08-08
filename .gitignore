@@ -9,8 +9,6 @@
 *.IRX
 *.img
 *.iso
-*.cnf
-*.CNF
 
 # Debug files
 *.log

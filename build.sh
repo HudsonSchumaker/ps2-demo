@@ -1,5 +1,4 @@
 #!/bin/bash
-# filepath: c:\Projects\ps2-demo\build.sh
 # PS2 Game Development Build Script for macOS/Linux
 # This script uses Docker to compile PS2 games
 

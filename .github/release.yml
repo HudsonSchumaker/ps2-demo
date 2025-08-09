@@ -1,0 +1,87 @@
+name: Build & Release PS2 ELF on Main
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required for creating releases
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for proper versioning
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: docker build -t ps2game-build .
+
+      - name: Compile ELF in Docker
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/usr/src/ps2game \
+            -w /usr/src/ps2game \
+            ps2game-build make
+
+      - name: Verify ELF file exists
+        run: |
+          if [ ! -f "bin/ps2game.elf" ]; then
+            echo "Error: ELF file not found!"
+            exit 1
+          fi
+          ls -la bin/ps2game.elf
+
+      - name: Generate version tag
+        id: version
+        run: |
+          # Generate version based on date and commit
+          VERSION="v$(date +'%Y.%m.%d')-$(git rev-parse --short HEAD)"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated version: $VERSION"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: PS2 Game Release ${{ steps.version.outputs.version }}
+          body: |
+            Automated release from main branch
+            
+            **Changes:**
+            - Latest commit: ${{ github.sha }}
+            - Build date: ${{ github.event.head_commit.timestamp }}
+            
+            **Files:**
+            - `ps2game.elf` - PlayStation 2 executable file
+            
+            To run on PS2 hardware or emulator, transfer the ELF file to your device.
+          draft: false
+          prerelease: false
+
+      - name: Upload ELF to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/ps2game.elf
+          asset_name: ps2game.elf
+          asset_content_type: application/octet-stream
+
+      - name: Upload ELF artifact (for workflow debugging)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps2game-elf-${{ steps.version.outputs.version }}
+          path: bin/ps2game.elf
+          retention-days: 30
+          

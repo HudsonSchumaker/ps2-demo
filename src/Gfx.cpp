@@ -101,8 +101,11 @@ SDL_Texture* Gfx::loadTexture(const char* filePath) {
         return nullptr;
     }
 
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    SDL_Surface* ps2_surface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGB565, 0);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, ps2_surface);
+    
     SDL_FreeSurface(surface);
+    SDL_FreeSurface(ps2_surface);
     return texture;
 }
 

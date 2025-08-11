@@ -16,7 +16,7 @@ TitleScreen::~TitleScreen() {
 
 void TitleScreen::load() {
 	nextScene = "Menu";
-    char bg_path[] = "cdrom0:\\DATA\\BG1.PNG;1";
+    char bg_path[] = "cdrom0:\\DATA\\BG512.PNG;1";
 	background = Gfx::getInstance()->loadTexture(bg_path);
 	rect = {
 		0,    // x

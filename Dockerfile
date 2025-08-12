@@ -24,7 +24,7 @@ ENV PATH=$PATH:$PS2DEV/bin:$PS2DEV/ee/bin:$PS2DEV/iop/bin
 COPY . .
 
 # Create build directories
-RUN mkdir -p build bin
+RUN mkdir -p build bin dvdrom
 
 # Default command is to build the game
 CMD ["make"]

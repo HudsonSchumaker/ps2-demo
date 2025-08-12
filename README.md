@@ -15,7 +15,7 @@ assets/           # Game assets (images, etc.)
 bin/              # Compiled ELF and ISO files
 build/            # Object files
 include/          # C++ header files
-iso_root/         # ISO build root (BOOT.ELF, SYSTEM.CNF, DATA)
+dvdrom/           # ISO build root (BOOT.ELF, SYSTEM.CNF, DATA)
 src/              # C++ source files
 Makefile          # Build script for PS2Dev toolchain
 Dockerfile        # Docker setup for PS2Dev environment
@@ -55,7 +55,7 @@ docker-compose.yaml # Compose file for interactive development
 ## Key Dependencies
 - [ps2sdk](https://github.com/ps2dev/ps2sdk)
 - [gsKit](https://github.com/ps2dev/gsKit)
-- SDL2 port for PS2
+- [SDL2 port for PS2](https://github.com/ps2dev/ps2sdk-ports/tree/master/sdl)
 - padlib, audsrv, modplug, freetype, png, zlib
 
 ## License

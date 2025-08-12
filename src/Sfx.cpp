@@ -37,14 +37,38 @@ Sfx* Sfx::getInstance() {
 }
 
 void Sfx::setSfxContext() {
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
+    // PS2-optimized audio settings
+    // MIX_DEFAULT_FORMAT: Usually 16-bit signed, good for PS2
+    // 2: Stereo channels
+    // 3096: Larger buffer for PS2's slower I/O and processing
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 3096) < 0) {
         printf("ERROR: Mixer initialization failed: %s\n", Mix_GetError());
         return;
     }
+    Mix_AllocateChannels(4); // Limit to 4 simultaneous sound effects
 }
 
-Mix_Chunk* Sfx::loadSound(const std::string& filePath) {
-    return Mix_LoadWAV(filePath.c_str());
+Mix_Chunk* Sfx::loadSound(const char* filePath) {
+    FILE* file = fopen(filePath, "rb");
+    if (!file) {
+        printf("ERROR: fopen failed for sound: %s\n", filePath);
+        return nullptr;
+    }
+
+    SDL_RWops* rw = SDL_RWFromFP(file, SDL_TRUE); // SDL_TRUE = auto close
+    if (!rw) {
+        printf("ERROR: SDL_RWFromFP failed for sound!\n");
+        fclose(file);
+        return nullptr;
+    }
+
+    Mix_Chunk* chunk = Mix_LoadWAV_RW(rw, 1); // 1 = auto free rw
+    if (!chunk) {
+        printf("ERROR: Mix_LoadWAV_RW failed: %s\n", Mix_GetError());
+        return nullptr;
+    }
+
+    return chunk;
 }
 
 int Sfx::playSound(Mix_Chunk* sound) {
@@ -71,8 +95,41 @@ void Sfx::unPauseSound(int channel) {
     Mix_Resume(channel);
 }
 
-void Sfx::playMusic(const std::string& filePath, int loop) {
-    // TODO: Implement music loading and playing
+void Sfx::playMusic(const char* filePath) {
+    playMusic(filePath, -1);
+}
+
+void Sfx::playMusic(const char* filePath, int loop) {
+    // Free existing music if loaded
+    if (music) {
+        Mix_FreeMusic(music);
+        music = nullptr;
+    }
+    
+    FILE* file = fopen(filePath, "rb");
+    if (!file) {
+        printf("ERROR: fopen failed for music: %s\n", filePath);
+        return;
+    }
+
+    SDL_RWops* rw = SDL_RWFromFP(file, SDL_TRUE); // SDL_TRUE = auto close
+    if (!rw) {
+        printf("ERROR: SDL_RWFromFP failed for music!\n");
+        fclose(file);
+        return;
+    }
+    
+    // Load music file using RWops
+    music = Mix_LoadMUS_RW(rw, 1); // 1 = auto free rw
+    if (!music) {
+        printf("ERROR: Failed to load music: %s\n", Mix_GetError());
+        return;
+    }
+    
+    // Play music with specified loop count (-1 for infinite loop)
+    if (Mix_PlayMusic(music, loop) < 0) {
+        printf("ERROR: Failed to play music: %s\n", Mix_GetError());
+    }
 }
 
 void Sfx::stopMusic() {

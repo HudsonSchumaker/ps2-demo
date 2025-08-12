@@ -32,14 +32,17 @@ public:
     ~Sfx();
     static Sfx* getInstance();
     void setSfxContext();
-    Mix_Chunk* loadSound(const std::string& filePath);
+    
+    Mix_Chunk* loadSound(const char* filePath);
     int playSound(Mix_Chunk* sound);
     int playSound(Mix_Chunk* sound, int loop);
     void stopSound(int channel);
     void stopSound(int channel, int delay);
     void pauseSound(int channel);
     void unPauseSound(int channel);
-    void playMusic(const std::string& filePath, int loop);
+
+    void playMusic(const char* filePath);
+    void playMusic(const char* filePath, int loop);
     void stopMusic();
     void stopMusic(int delay);
     void pauseMusic();

@@ -18,6 +18,7 @@ private:
 	short speed = 8;
 	SDL_Texture* spacebarStart = nullptr;
 	SDL_Rect rectSpacebarStart = { 0, 0, 0, 0 };
+	Mix_Chunk* bate = nullptr;
 
 	void load() override;
 	void input() override;

@@ -8,6 +8,7 @@
 * @copyright Copyright (c) 2024, Dodoi-Lab
 */
 #include "TitleScreen.h"
+#include "Sfx.h"
 
 TitleScreen::TitleScreen() : Scene() {}
 TitleScreen::~TitleScreen() {
@@ -29,10 +30,14 @@ void TitleScreen::load() {
 	spacebarStart = Gfx::getInstance()->loadTexture(space_path);
 	rectSpacebarStart = Gfx::getInstance()->getTextureBounds(spacebarStart);
 
+	bate = Sfx::getInstance()->loadSound("cdrom0:\\DATA\\BATE.MP3;1");
+
 	isRunning = true;
 }
 
 short TitleScreen::run() {
+	char bate_path[] = "cdrom0:\\DATA\\INTRO.MP3;1";
+	Sfx::getInstance()->playMusic(bate_path, 0);
 	while (isRunning) {
 		input();
 		update();

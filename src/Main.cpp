@@ -10,15 +10,9 @@
 void setUp() {
     // Initialize PS2 systems
     SifInitRpc(0);
-    printf("PS2 systems initialized.\n");
 
-    // Initialize graphics context
     Gfx::getInstance()->setGfxContext();
-
-    // Initialize sound effects context
     Sfx::getInstance()->setSfxContext();
-
-    // Initialize input context
     Input::getInstance()->setInputContext();
 }
 

@@ -37,7 +37,7 @@ private:
     /**
     * @brief Future object for asynchronous loading.
     */
-    std::future<void> loadFuture;
+   // std::future<void> loadFuture;
 
     virtual void load() = 0;
     virtual void input() = 0;
@@ -84,6 +84,11 @@ public:
     * @brief Waits for the scene to finish loading.
     */
     void waitForLoad();
+
+    /**
+    * @brief Frees resources used by the scene.
+    */
+    void freeResources();
 
     /**
     * @brief Returns the name of the next scene.

@@ -76,6 +76,11 @@ int Sfx::playSound(Mix_Chunk* sound) {
 }
 
 int Sfx::playSound(Mix_Chunk* sound, int loop) {
+    if (!sound) {
+        printf("ERROR: Invalid sound chunk!\n");
+        return -1;
+    }
+    printf("Playing sound\n");
     return Mix_PlayChannel(-1, sound, loop);
 }
 

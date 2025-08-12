@@ -1,7 +1,7 @@
 /**
-* @file SplashScreen.h
+* @file Menu.h
 * @author Hudson Schumaker
-* @brief Defines the SplashScreen class.
+* @brief Defines the Menu class.
 * @version 1.0.0
 *
 * Dodoi-Engine is a game engine developed by Dodoi-Lab.
@@ -11,14 +11,13 @@
 #include "Scene.h"
 #include "../src/Pch.h"
 
-/**
-* @class SplashScreen
-* @brief The SplashScreen class.
-*/
-class SplashScreen final : public Scene {
+
+class Menu final : public Scene {
 private:
-	SDL_Texture* logoTexture = nullptr;
+	SDL_Texture* background = nullptr;
 	SDL_Rect rect = { 0, 0, 0, 0 };
+
+    Mix_Chunk* okSFX = nullptr;
 
 	void load() override;
 	void input() override;
@@ -27,8 +26,8 @@ private:
 	void unload() override;
 
 public:
-	SplashScreen();
-	~SplashScreen();
+	Menu();
+	~Menu();
 
 	short run() override;
 };

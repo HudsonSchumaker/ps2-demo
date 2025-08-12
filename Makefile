@@ -3,8 +3,7 @@
 # Include PS2SDK rules FIRST
 
 EE_BIN = bin/ps2game.elf
-EE_OBJS = build/Main.o build/Gfx.o build/Sfx.o build/Scene.o build/SceneManager.o build/SplashScreen.o build/TitleScreen.o
-
+EE_OBJS = build/Main.o build/Gfx.o build/Sfx.o build/Input.o build/Scene.o build/SceneManager.o build/SplashScreen.o build/TitleScreen.o build/Menu.o
 # PS2SDK and compiler settings - use native PS2 graphics libraries
 EE_LIBS := -L${PS2DEV}/gsKit/lib -L${PS2SDK}/ports/lib -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lxmp -lpng -lz -lfreetype -lpatches -lgskit -ldmakit -lps2_drivers -lmodplug -laudsrv -lpad -lstdc++ -latomic -lc
 EE_INCS := -I${PS2SDK}/ports/include -I./include

@@ -1,6 +1,8 @@
 #include "Pch.h"
 #include "../include/Gfx.h"
 #include "../include/Sfx.h"
+#include "../include/Input.h"
+#include "../include/Menu.h"
 #include "../include/TitleScreen.h"
 #include "../include/SceneManager.h"
 #include "../include/SplashScreen.h"
@@ -13,14 +15,18 @@ void setUp() {
     // Initialize graphics context
     Gfx::getInstance()->setGfxContext();
 
-    // Initialize msound effects context
+    // Initialize sound effects context
     Sfx::getInstance()->setSfxContext();
+
+    // Initialize input context
+    Input::getInstance()->setInputContext();
 }
 
 void init() {
     setUp();
     SceneManager::getInstance()->addScene("SplashScreen", std::make_unique<SplashScreen>());
     SceneManager::getInstance()->addScene("TitleScreen", std::make_unique<TitleScreen>());
+    SceneManager::getInstance()->addScene("Menu", std::make_unique<Menu>());
 }
 
 int main(int argc, char *argv[]) {

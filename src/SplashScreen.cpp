@@ -59,6 +59,7 @@ void SplashScreen::update() {
     times++;
     if (times > 6) {
         isRunning = false;
+        exit = NEXT; 
     }
 }
 
@@ -66,6 +67,7 @@ void SplashScreen::render() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, logoTexture, NULL, &rect);
+    
     SDL_RenderPresent(renderer);
 }
 

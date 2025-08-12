@@ -9,6 +9,7 @@
 */
 #pragma once
 #include "Scene.h"
+#include "../src/Pch.h"
 
 class TitleScreen final : public Scene {
 private:
@@ -18,7 +19,7 @@ private:
 	short speed = 8;
 	SDL_Texture* spacebarStart = nullptr;
 	SDL_Rect rectSpacebarStart = { 0, 0, 0, 0 };
-	Mix_Chunk* bate = nullptr;
+	Mix_Chunk* music = nullptr;
 
 	void load() override;
 	void input() override;

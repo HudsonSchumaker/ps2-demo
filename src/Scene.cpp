@@ -58,12 +58,17 @@ void Scene::endRender() {
 }
 
 void Scene::waitForLoad() {
-    isLoaded = true;
+    isLoaded = isRunning;
     millisecsPreviousFrame = SDL_GetTicks64();
     //TODO: if (loadFuture.valid()) {
     //loadFuture.get();
     //isLoaded = true;
     //millisecsPreviousFrame = SDL_GetTicks64();
+}
+
+void Scene::freeResources() {
+    unload();
+    // TODO: Free other resources if needed
 }
 
 const std::string& Scene::getNextScene() const {

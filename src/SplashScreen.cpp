@@ -26,8 +26,8 @@ void SplashScreen::load() {
     rect = {
         Defs::SCREEN_H_WIDTH - (size.w / 2) - 20,  // x
         Defs::SCREEN_H_HEIGHT - (size.h / 2) - 20, // y
-        size.w,                                    // w
-        size.h                                     // h
+        256,                                       // w
+        64                                         // h
     };
     isRunning = true;
 }

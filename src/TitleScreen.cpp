@@ -21,8 +21,8 @@ void TitleScreen::load() {
 	rect = {
 		0,    // x
 		0,    // y
-		Defs::SCREEN_WIDTH, // w
-		Defs::SCREEN_HEIGHT // h
+		512,  // w
+		512   // h
 	};
 
     char space_path[] = "cdrom0:\\DATA\\SPCBAR.PNG;1";
